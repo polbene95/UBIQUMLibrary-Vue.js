@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ubiqum Library</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Grand+Hotel" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+</head>
+
+<body>
+    <div class="body" id="app">
+        <header class="container">
+            <div class="logo-div">
+                <img src="style/images/ubiqum-logo.svg" alt="ubiqum logo">
+            </div>
+            <div class="search-div">
+                <input id="search-bar" class="quicksearch search-bar" type="text" onfocus="this.value=''" placeholder="Search ...">
+                <button class="btn" @click="searchBook()">Search</button>
+                <button class="btn" v-if="books.length != allBooks.length" @click="resetBooks()">Show All Books</button>
+            </div>
+            <div class="change-display">
+                <span v-if="flipDisplay == true" @click="changeDisplay()" class="glyphicon glyphicon-th"></span>
+                <span v-if="flipDisplay == false" @click="changeDisplay()" class="glyphicon glyphicon-th-list"></span>
+            </div>
+        </header>
+        <div class="loader" v-if="noData == true">
+            <div class="windows8">
+                <div class="wBall" id="wBall_1">
+                    <div class="wInnerBall"></div>
+                </div>
+                <div class="wBall" id="wBall_2">
+                    <div class="wInnerBall"></div>
+                </div>
+                <div class="wBall" id="wBall_3">
+                    <div class="wInnerBall"></div>
+                </div>
+                <div class="wBall" id="wBall_4">
+                    <div class="wInnerBall"></div>
+                </div>
+                <div class="wBall" id="wBall_5">
+                    <div class="wInnerBall"></div>
+                </div>
+            </div>
+        </div>
+        <div class="library container grid" v-if="noData == false">
+            <div class="warning-box" v-if="books.length == 0 && warningText">
+                No book found
+            </div>
+            <div class="flip-container" ontouchstart="this.classList.toggle('hover');" v-for="book in books" v-if="books.length > 0 && flipDisplay==true" :data-title="book.title">
+                <div class="flipper">
+                    <div class="front">
+                        <img class="image-front" :src="book.cover" :alt="book.title">
+                    </div>
+                    <div class="back">
+                        <div class="book-title">
+                            <p>{{book.title}}</p>
+                        </div>
+                        <div class="description">
+                            <p>{{book.description}}</p>
+                        </div>
+                        <div class="more-info">
+                            <button class="btn button-book" :href="book.detail" data-fancybox="gallery">More Info</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="left-right" v-for="book in books" v-if="books.length > 0 && flipDisplay == false">
+                <div class="left">
+                    <a :href="book.detail" data-fancybox="gallery"><img class="image-front" :src="book.cover" :alt="book.title"></a>
+                </div>
+                <div class="right">
+                    <div class="book-title">
+                        <p>{{book.title}}</p>
+                    </div>
+                    <div class="description">
+                        <p>{{book.description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="script/main.js"></script>
+</body>
+
+</html>
